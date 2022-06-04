@@ -1,6 +1,6 @@
 services:
   # stacks-blockchain-api instance
-  - name: byz1-mainnet-stx-blockchain-api
+  - name: byz2-mainnet-stx-blockchain-api
     type: pserv
     env: docker
     region: oregon
@@ -12,23 +12,23 @@ services:
     envVars:
       - key: PG_HOST
         fromDatabase:
-          name: byz1-mainnet-postgres
+          name: byz2-mainnet-postgres
           property: host
       - key: PG_PORT
         fromDatabase:
-          name: byz1-mainnet-postgres
+          name: byz2-mainnet-postgres
           property: port
       - key: PG_DATABASE
         fromDatabase:
-          name: byz1-mainnet-postgres
+          name: byz2-mainnet-postgres
           property: database
       - key: PG_USER
         fromDatabase:
-          name: byz1-mainnet-postgres
+          name: byz2-mainnet-postgres
           property: user
       - key: PG_PASSWORD
         fromDatabase:
-          name: byz1-mainnet-postgres
+          name: byz2-mainnet-postgres
           property: password
       - key: STACKS_CORE_EVENT_HOST
         value: 0.0.0.0
@@ -38,19 +38,19 @@ services:
         value: pg
       - key: STACKS_CORE_RPC_HOST
         fromService:
-          name: byz1-mainnet-stx-blockchain
+          name: byz2-mainnet-stx-blockchain
           type: pserv
           property: host
       - key: STACKS_CORE_RPC_PORT
         value: 80
-      - fromGroup: byz1-mainnet-settings
+      - fromGroup: byz2-mainnet-settings
     disk:
       name: api-event-replay
       mountPath: /root/stacks-blockchain/data
       sizeGB: 25
 
   # stacks-blockchain instance
-  - name: byz1-mainnet-stx-blockchain
+  - name: byz2-mainnet-stx-blockchain
     type: pserv
     env: docker
     region: oregon
@@ -62,17 +62,17 @@ services:
     envVars:
       - key: STACKS_BLOCKCHAIN_API_HOST
         fromService:
-          name: byz1-mainnet-stx-blockchain-api
+          name: byz2-mainnet-stx-blockchain-api
           type: pserv
           property: host
-      - fromGroup: byz1-mainnet-settings
+      - fromGroup: byz2-mainnet-settings
     disk:
-      name: byz1-mainnet-stx-blockchain
+      name: byz2-mainnet-stx-blockchain
       mountPath: /root/stacks-blockchain/data
       sizeGB: 50
 
   # nginx proxy instance
-  - name: byz1-mainnet-nginx
+  - name: byz2-mainnet-nginx
     type: web
     env: docker
     region: oregon
@@ -85,18 +85,18 @@ services:
     envVars:
       - key: STACKS_BLOCKCHAIN_API_HOST
         fromService:
-          name: byz1-mainnet-stx-blockchain-api
+          name: byz2-mainnet-stx-blockchain-api
           type: pserv
           property: host
-      - fromGroup: byz1-mainnet-settings
+      - fromGroup: byz2-mainnet-settings
 
 # Managed Postgres instance
 databases:
-  - name: byz1-mainnet-postgres
+  - name: byz2-mainnet-postgres
     plan: Standard Plus
 
 envVarGroups:
-  - name: byz1-mainnet-settings
+  - name: byz2-mainnet-settings
     envVars:
       - key: NODE_ENV
         value: production
