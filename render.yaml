@@ -84,11 +84,12 @@ services:
     autoDeploy: true
     envVars:
       - key: STACKS_BLOCKCHAIN_API_HOST
-        fromService:
-          name: byz2-mainnet-stx-blockchain-api
-          type: pserv
-          property: host
-      - fromGroup: byz2-mainnet-settings
+        value: byz2-mainnet-stx-blockchain-api
+        # fromService:
+        #   name: byz2-mainnet-stx-blockchain-api
+        #   type: pserv
+        #   property: host
+      # - fromGroup: byz2-mainnet-settings
 
 # Managed Postgres instance
 databases:
